@@ -1,0 +1,295 @@
+/* =========================================================
+   MINI ARCADE - 게임 화면 공통 스타일
+   ========================================================= */
+
+/* 게임 화면 헤더 */
+.game-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--main);
+  margin-bottom: 16px;
+}
+
+#game-title {
+  text-align: center;
+  font-size: clamp(14px, 2.5vw, 20px);
+  color: var(--secondary);
+  letter-spacing: 4px;
+}
+
+.score-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.score-area .label {
+  color: var(--dim);
+}
+
+.score-value {
+  color: var(--main);
+  min-width: 40px;
+  text-align: right;
+}
+
+.hi-value {
+  color: var(--secondary);
+  min-width: 40px;
+  text-align: right;
+}
+
+/* 게임 컨테이너 - 게임이 그려질 영역 */
+.game-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  overflow: auto;
+}
+
+.game-container canvas {
+  background: var(--bg);
+  border: 3px solid var(--main);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* 게임 도움말 텍스트 */
+.game-info {
+  margin-top: 14px;
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 2px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.game-info strong {
+  color: var(--main);
+}
+
+/* 게임 안의 보조 UI 패널 */
+.game-panel {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 12px;
+  font-size: 10px;
+  color: var(--text);
+  letter-spacing: 1px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.game-panel .item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.game-panel .item .label {
+  color: var(--dim);
+  font-size: 8px;
+}
+
+/* ============== 2048 게임 ============== */
+.grid-2048 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: var(--bg-light);
+  border: 3px solid var(--main);
+  padding: 8px;
+  width: min(420px, 90vw);
+  aspect-ratio: 1;
+}
+
+.tile-2048 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(16px, 4vw, 26px);
+  font-weight: bold;
+  border: 2px solid var(--dim);
+  background: var(--bg);
+  color: var(--text);
+  transition: none;
+}
+
+.tile-2048.t2    { background: #1a3a4a; color: #88d8ff; border-color: #88d8ff; }
+.tile-2048.t4    { background: #2a4a6a; color: #aaeeff; border-color: #aaeeff; }
+.tile-2048.t8    { background: #3a2a6a; color: #c4aaff; border-color: #c4aaff; }
+.tile-2048.t16   { background: #5a2a7a; color: #e8aaff; border-color: #e8aaff; }
+.tile-2048.t32   { background: #7a2a6a; color: var(--accent); border-color: var(--accent); }
+.tile-2048.t64   { background: #7a3a3a; color: #ff8888; border-color: #ff8888; }
+.tile-2048.t128  { background: #7a5a2a; color: #ffcc66; border-color: #ffcc66; }
+.tile-2048.t256  { background: #7a7a2a; color: var(--secondary); border-color: var(--secondary); }
+.tile-2048.t512  { background: #5a7a2a; color: #ccff66; border-color: #ccff66; }
+.tile-2048.t1024 { background: #2a7a3a; color: var(--main); border-color: var(--main); font-size: clamp(12px, 3vw, 20px); }
+.tile-2048.t2048 { background: var(--main); color: var(--bg); border-color: var(--secondary); font-size: clamp(12px, 3vw, 20px); animation: blink 0.5s steps(2) infinite; }
+.tile-2048.big   { font-size: clamp(10px, 2.5vw, 16px); }
+
+/* ============== MEMORY 게임 ============== */
+.memory-board {
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  background: var(--bg-light);
+  border: 3px solid var(--main);
+  max-width: 100%;
+}
+
+.memory-card {
+  aspect-ratio: 1;
+  background: var(--bg-light);
+  border: 2px solid var(--main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(20px, 5vw, 32px);
+  cursor: pointer;
+  position: relative;
+  color: transparent;
+}
+
+.memory-card .face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.memory-card .back {
+  background:
+    linear-gradient(45deg, var(--main) 25%, transparent 25%) 0 0/8px 8px,
+    linear-gradient(-45deg, var(--main) 25%, transparent 25%) 0 0/8px 8px,
+    var(--bg-light);
+  color: transparent;
+}
+
+.memory-card.flipped .back {
+  display: none;
+}
+
+.memory-card.matched {
+  border-color: var(--secondary);
+  background: var(--bg-light);
+  animation: matched-flash 0.4s steps(2) 2;
+}
+
+@keyframes matched-flash {
+  0%, 100% { background: var(--bg-light); }
+  50% { background: var(--secondary); }
+}
+
+/* ============== TIC TAC TOE ============== */
+.tic-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  background: var(--main);
+  padding: 6px;
+  width: min(360px, 80vw);
+  aspect-ratio: 1;
+  border: 3px solid var(--main);
+}
+
+.tic-cell {
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(40px, 10vw, 70px);
+  cursor: pointer;
+  color: var(--text);
+  font-weight: bold;
+}
+
+.tic-cell:hover:not(.taken):not(.no-click) {
+  background: var(--bg-light);
+}
+
+.tic-cell.x { color: var(--accent); text-shadow: 0 0 8px var(--accent); }
+.tic-cell.o { color: var(--main); text-shadow: 0 0 8px var(--main); }
+.tic-cell.win { animation: win-flash 0.4s steps(2) infinite; }
+
+@keyframes win-flash {
+  0%, 100% { background: var(--bg); }
+  50% { background: var(--secondary); }
+}
+
+.tic-mode-select {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tic-mode-select .pixel-btn.active {
+  background: var(--main);
+  color: var(--bg);
+}
+
+.tic-status {
+  text-align: center;
+  font-size: 11px;
+  color: var(--secondary);
+  margin: 14px 0;
+  letter-spacing: 2px;
+  min-height: 20px;
+}
+
+/* ============== REACTION TEST ============== */
+.reaction-zone {
+  width: min(500px, 90vw);
+  height: min(380px, 60vh);
+  border: 3px solid var(--main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 18px;
+  text-align: center;
+  padding: 20px;
+}
+
+.reaction-zone.wait { background: var(--danger); color: #fff; }
+.reaction-zone.go   { background: var(--main); color: var(--bg); }
+.reaction-zone.ready { background: var(--bg-light); color: var(--text); }
+.reaction-zone.early { background: var(--secondary); color: var(--bg); }
+.reaction-zone.done { background: var(--info); color: var(--bg); }
+
+.reaction-text {
+  font-size: clamp(20px, 4vw, 32px);
+  letter-spacing: 4px;
+  line-height: 1.4;
+}
+
+.reaction-sub {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+/* ============== MEMORY 난이도 선택 ============== */
+.difficulty-select {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.difficulty-select .pixel-btn.active {
+  background: var(--main);
+  color: var(--bg);
+}
